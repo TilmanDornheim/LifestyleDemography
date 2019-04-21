@@ -38,6 +38,12 @@ dataset_developing_lifeexpectancy = pd.read_csv("DVLP_LIFEEXPECTANCY.csv")
 
 dataset_developing_fertility = pd.read_csv("DVLP_FERTILITY.csv")
 
+dataset_oecd_independent = pd.read_csv("OECD_FULL.csv")
+
+dataset_oecd_lifeexpectancy = pd.read_csv("OECD_LIFE_EXPECTANCY.csv")
+
+dataset_oecd_fertility = pd.read_csv("OECD_FERTILITY.csv")
+
 
 #Delete empty columns
 
@@ -45,16 +51,20 @@ dataset_marriage_us.drop(dataset_marriage_us.columns[dataset_marriage_us.columns
 dataset_retirement_us.drop(dataset_retirement_us.columns[dataset_retirement_us.columns.str.contains('unnamed',case = False)],axis = 1, inplace = True)
 dataset_mortality_us.drop(dataset_mortality_us.columns[dataset_mortality_us.columns.str.contains('unnamed',case = False)],axis = 1, inplace = True)
 dataset_fertility_us.drop(dataset_fertility_us.columns[dataset_fertility_us.columns.str.contains('unnamed',case = False)],axis = 1, inplace = True)
+dataset_oecd_independent.drop(dataset_oecd_independent.columns[dataset_oecd_independent.columns.str.contains('unnamed',case = False)],axis = 1, inplace = True)
 
 
 
 dataset_us = pd.concat([dataset_marriage_us,dataset_retirement_us, dataset_alcohol_us, dataset_hoursworked_us,dataset_bmi_us,dataset_doctors_us], axis = 1)
 
-X = dataset_developing_independent
-Y = dataset_developing_fertility
+#Change this to determine what regression you want to run
+X = dataset_oecd_independent
+Y = dataset_oecd_fertility
 
+#Add intercept
 X = sm.add_constant(X)
 
+#Print regression summary
 print(OLS(Y,X).fit().summary())
 
 
